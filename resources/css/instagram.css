@@ -1,0 +1,18 @@
+body
+{
+    background-color: white;
+}
+
+#appContent .row,
+#appContent .row-fluid
+{
+    margin-top: 1em;
+}
+
+.picture-frame
+{
+    padding: 4px;
+    display: inline-block;
+    background-color: white;
+    border-radius: 2px;
+}

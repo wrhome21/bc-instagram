@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="SSA Boot Camp Instagram Clone Exercise">
+    <meta name="author" content="Chris, Jing, Luan, Rita">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+
+    <title>SSA Boot Camp Instagram Clone</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <link href="/css/instagram.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+</head>
+
+<body>
+    <div id="wrapper" ng-app="bc-instagram" ng-controller="bc-instagram-controller">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#/"><i class="fa fa-instagram fa-fw"></i>&nbsp;Instagram Clone</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">
+
+                <li>
+                    <a id="mnuCompass" href="#/suggestions">
+                        <i class="fa fa-compass fa-fw"></i>
+                    </a>
+                </li>
+
+                <li>
+                    <a id="mnuHeart" href="#/alerts">
+                        <i class="fa fa-heart-o fa-fw"></i>
+                    </a>
+                </li>
+
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-user fa-fw"></i> {{currentUserName()}} <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#/profile/{{currentUser.userName}}" id="mnuProfile"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->                
+
+            </ul>
+
+            <!-- /.navbar-top-links -->
+            <div class="col-sm-3 col-md-3 pull-right">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="button"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </nav>
+
+        <!-- Page Content -->
+        <div class="container-fluid">
+
+            <ng-view>
+
+            </ng-view>
+        
+        </div>
+        <!-- /.container-fluid -->
+    </div>
+    <!-- /#wrapper -->
+
+    <script type="text/babel" src="js/PostViewer.js"></script>
+    <script type="text/babel">
+
+        var FileUploader = React.createClass({
+
+            getInitialState: function() {
+                return {
+                    files: null,
+                    fileName: null
+                };
+            },
+
+            handleSubmit: function(evt) {
+                
+                var form = $(evt.target);
+                
+                $.ajax({
+                    type:'POST',
+                    url: form.attr('action'),
+                    cache:false,
+                    data: new FormData(form[0]),
+                    contentType: false,
+                    processData: false,
+                    success: function(data) {
+                        alert(data);
+
+                        // self.setState({ 
+                        //    fileName: null 
+                        // });
+
+                        form.get(0).reset();
+                    },
+                    error: function(jqXhr, status, err) {
+                        alert("ERROR: " + err);
+                    }
+                });
+                
+                evt.preventDefault();
+            },
+
+            render: function() {
+                        return  <form name="photo" id="imageUploadForm" enctype="multipart/form-data" action="/post" 
+                                      method="post" onSubmit={this.handleSubmit}>
+                                    <input type="file" id="ImageBrowse" name="image" defaultValue="" />
+                                    <input type="submit" name="uploadButton" value="Upload" className="btn btn-primary btn-outline" />
+                                </form>;
+            }
+        });
+
+        var Suggestions = React.createClass({
+            render: function() {
+
+                return  <div className="chat-panel panel panel-default">
+                            <div className="panel-heading">
+                                SUGGESTIONS FOR YOU
+                                <div className="btn-group pull-right">
+                                    <button type="button" className="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                        <i className="fa fa-chevron-down"></i>
+                                    </button>
+                                    <ul className="dropdown-menu slidedown">
+                                        <li>
+                                            <a href="#">
+                                                <i className="fa fa-refresh fa-fw"></i> Refresh
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i className="fa fa-check-circle fa-fw"></i> Available
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i className="fa fa-times fa-fw"></i> Busy
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i className="fa fa-clock-o fa-fw"></i> Away
+                                            </a>
+                                        </li>
+                                        <li className="divider"></li>
+                                        <li>
+                                            <a href="#">
+                                                <i className="fa fa-sign-out fa-fw"></i> Sign Out
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div className="panel-body">
+                                <ul className="chat">
+                                    
+                                </ul>
+                            </div>
+                        </div>;
+            }
+        });
+
+        var Feed = React.createClass({
+            render: function() {
+
+                return  <div className="chat-panel panel panel-default">
+                            <div className="panel-heading">
+                                FEED
+                                <div className="btn-group pull-right">
+                                    <button type="button" className="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                        <i className="fa fa-chevron-down"></i>
+                                    </button>
+                                    <ul className="dropdown-menu slidedown">
+                                        <li>
+                                            <a href="#">
+                                                <i className="fa fa-refresh fa-fw"></i> Refresh
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i className="fa fa-check-circle fa-fw"></i> Available
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i className="fa fa-times fa-fw"></i> Busy
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i className="fa fa-clock-o fa-fw"></i> Away
+                                            </a>
+                                        </li>
+                                        <li className="divider"></li>
+                                        <li>
+                                            <a href="#">
+                                                <i className="fa fa-sign-out fa-fw"></i> Sign Out
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div className="panel-body">
+                                <ul className="chat">
+                                    
+                                </ul>
+                            </div>
+                        </div>;
+            }
+        });
+
+        ReactDOM.render(
+            <FileUploader />, $('#fileUploadDiv')[0]
+        );
+
+      ReactDOM.render(
+        <Suggestions />, $('#suggestionsDiv')[0]
+      );
+
+      ReactDOM.render(
+        <PostViewer postId="1" />, $('#postingsDiv')[0]
+      );
+
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="/vendor/metisMenu/metisMenu.min.js"></script>
+
+    <script src="/js/sb-admin-2.js"></script>
+    <script src="/js/instagram.js"></script>
+
+</body>
+
+</html>

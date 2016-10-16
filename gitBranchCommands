@@ -1,0 +1,28 @@
+
+//go to your local master repo. dir where you have package.json and where you ran npm install
+
+git branch rita  //create a new branch dir with your name
+git checkout rita  //create a working branch with your name
+
+git fetch origin master:master  //periodically run this command to get all updates from master repo.
+
+
+//to see changes in master, change to master branch by using this command
+git checkout master
+
+//to return to your branch and continue to working
+git checkout rita
+
+//When you are ready to merge your changes from branch to master 
+
+git checkout master
+git merge rita
+
+//if needed: resolve conflicts, stage changes (add files if any), make a comit on master then push on master
+
+//after latest version of master matches; to continue working in your branch 'rita': delete 'rita' and 
+//then recreate and start working on new branch again
+
+branch git branch -d rita //command to delete branch but you can use the next command to do it all in one command
+
+git checkout -b rita  //if does not exist:will create new and checkout and if exists:it may move to current head on master;need to confirm this

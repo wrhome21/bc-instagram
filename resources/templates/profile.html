@@ -1,0 +1,82 @@
+<div class="row-fluid">
+
+    <div class="col-lg-4">&nbsp;</div>
+
+    <div class="col-lg-4">
+
+        <h1 class="page-header">User Profile</h1>
+
+        <ul class="nav nav-pills">
+            <li class="active"><a href="#info-pill" data-toggle="tab" target="_self">Info</a>
+            </li>
+            <li><a href="#following-pill" data-toggle="tab" target="_self">Following</a>
+            </li>
+            <li><a href="#followers-pill" data-toggle="tab" target="_self">Followers</a>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+
+            <!-- Info -->
+            <div class="tab-pane fade in active" id="info-pill">
+                <div class="well">
+                    <form role="form">
+                        <div class="form-group">
+                            <label>User Name</label>
+                            <div id="userName" name="userName">{{profileUser.userName}}</div>
+                        </div>
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <input ng-if="getProfileNotReadOnly()" class="form-control" id="firstName" name="firstName" maxlength="20" ng-model="profileUser.firstName"
+                                autofocus>
+                            <div ng-if="getProfileReadOnly()" id="firstName" name="firstName">{{profileUser.firstName}}</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Middle Name</label>
+                            <input ng-if="getProfileNotReadOnly()" class="form-control" id="middleName" name="middleName" maxlength="20" ng-model="profileUser.middleName">
+                            <div ng-if="getProfileReadOnly()" id="middleName" name="middleName">{{profileUser.middleName}}</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input ng-if="getProfileNotReadOnly()" class="form-control" id="lastName" name="lastName" maxlength="20" ng-model="profileUser.lastName">
+                            <div ng-if="getProfileReadOnly()" id="lastName" name="lastName">{{profileUser.lastName}}</div>
+                        </div>
+
+                        <button type="button" id="updateProfileButton" onclick="updateProfile(); return false;" class="btn btn-primary">
+                    <i class="fa fa-check"></i>&nbsp;Save
+                </button>
+                    </form>
+                </div>
+            </div>
+            <!-- /Info -->
+
+            <!-- Following -->
+            <div class="tab-pane fade" id="following-pill">
+                <div ng-repeat="following in followings" class="well">
+                    <div style="display: inline-block;">
+                        <h3>{{following.user_name}}</h3>
+                        <div>{{following.first_name}} {{following.last_name}}</div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Following -->
+
+            <!-- Followers -->
+            <div class="tab-pane fade" id="followers-pill">
+                <div ng-repeat="follower in followers" class="well">
+                    <div style="display: inline-block;">
+                        <h3>{{follower.user_name}}</h3>
+                        <div>{{follower.first_name}} {{follower.last_name}}</div>
+                    </div>
+                    <!-- /Followers -->
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="col-lg-4">&nbsp;</div>
+
+    </div>

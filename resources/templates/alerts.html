@@ -1,0 +1,22 @@
+<div class="row-fluid">
+
+    <div class="col-lg-4">&nbsp;</div>
+
+    <div class="col-lg-4">
+
+        <h1 class="page-header">Alerts</h1>
+
+        <div ng-if="alerts.length > 0">
+            <div ng-repeat="alert in alerts" class="well">
+                <h4>{{getAlertDescription(alert)}}</h4>
+            </div>
+        </div>
+        <div ng-if="alerts.length == 0">
+            <h3>No Alerts</h3>
+        </div>
+
+    </div>
+
+    <div class="col-lg-4">&nbsp;</div>
+
+</div>
